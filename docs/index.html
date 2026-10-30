@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>AAP STORE — App Store Android TV / STB</title>
+<meta name="description" content="Katalog aplikasi Android untuk STB & Android TV. Simpan sampai 30 APK, unduh dan instal langsung dari TV." />
+<meta name="theme-color" content="#0b1020" />
+<link rel="icon" href="favicon.png" />
+<link rel="apple-touch-icon" href="icon-192.png" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <img src="icon-192.png" alt="" class="brand-logo" width="56" height="56" />
+    <div class="brand-text">
+      <h1>AAP <span>STORE</span></h1>
+      <p id="tagline">Muat katalog…</p>
+    </div>
+  </div>
+
+  <div class="topbar-actions">
+    <label class="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4a6 6 0 1 0 3.8 10.6l4.3 4.3 1.4-1.4-4.3-4.3A6 6 0 0 0 10 4Zm0 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z"/></svg>
+      <input id="search" type="search" placeholder="Cari aplikasi…" autocomplete="off" spellcheck="false" />
+    </label>
+    <button id="btn-refresh" class="icon-btn" title="Muat ulang katalog" aria-label="Muat ulang katalog">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5V2L8 6l4 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7Z"/></svg>
+    </button>
+    <button id="btn-settings" class="icon-btn" title="Pengaturan sumber katalog" aria-label="Pengaturan">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm0 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm8.4 3.3.9 2.1-2 2-2.1-.9a8 8 0 0 1-1.7 1l-.4 2.2h-2.8l-.4-2.2a8 8 0 0 1-1.7-1l-2.1.9-2-2 .9-2.1a8 8 0 0 1-1-1.7L2.3 13v-2.8l2.2-.4a8 8 0 0 1 1-1.7l-.9-2.1 2-2 2.1.9a8 8 0 0 1 1.7-1l.4-2.2h2.8l.4 2.2a8 8 0 0 1 1.7 1l2.1-.9 2 2-.9 2.1a8 8 0 0 1 1 1.7l2.2.4V13l-2.2.4a8 8 0 0 1-1 1.9Z"/></svg>
+    </button>
+    <button id="btn-install-app" class="ghost-btn hidden">Pasang</button>
+  </div>
+</header>
+
+<nav id="cats" class="cats" aria-label="Kategori"></nav>
+
+<main id="main">
+  <div id="status" class="status" role="status" aria-live="polite">
+    <div class="spinner"></div>
+    <p>Memuat katalog…</p>
+  </div>
+  <section id="grid" class="grid" aria-label="Daftar aplikasi"></section>
+</main>
+
+<footer class="foot">
+  <span id="foot-info">AAP STORE</span>
+  <span class="dot">•</span>
+  <span>Maksimal <strong id="foot-max">30</strong> aplikasi</span>
+  <span class="dot">•</span>
+  <button id="btn-help" class="link-btn">Cara instal APK di STB</button>
+  <span class="dot">•</span>
+  <a class="link-btn" href="download.html">Unduh APK</a>
+</footer>
+
+<!-- ============ Modal detail aplikasi ============ -->
+<div id="sheet" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+  <div class="sheet">
+    <button class="close-btn" data-close aria-label="Tutup">✕</button>
+    <div class="sheet-head">
+      <img id="sheet-icon" class="sheet-icon" alt="" width="128" height="128" />
+      <div>
+        <h2 id="sheet-title">Aplikasi</h2>
+        <p id="sheet-pkg" class="mono"></p>
+        <div id="sheet-badges" class="badges"></div>
+      </div>
+    </div>
+    <p id="sheet-desc" class="sheet-desc"></p>
+    <dl id="sheet-meta" class="meta-list"></dl>
+    <div class="sheet-actions">
+      <a id="sheet-download" class="primary-btn" href="#" rel="noopener">⬇ Unduh &amp; Instal</a>
+      <button id="sheet-copy" class="ghost-btn">Salin link</button>
+    </div>
+    <p class="hint">Setelah terunduh, buka notifikasi / aplikasi <em>Files</em> di STB lalu tekan APK-nya untuk instal. Izinkan “Instal aplikasi tidak dikenal” sekali saja.</p>
+  </div>
+</div>
+
+<!-- ============ Modal bantuan ============ -->
+<div id="help" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="help-title">
+  <div class="sheet">
+    <button class="close-btn" data-close aria-label="Tutup">✕</button>
+    <h2 id="help-title">Cara instal di STB / Android TV</h2>
+    <ol class="steps">
+      <li><strong>Buka AAP STORE</strong> di browser STB (Chrome / TV Bro / Puffin). Ketik alamat situsnya, atau kirim link-nya ke TV.</li>
+      <li><strong>Pilih aplikasi</strong> lalu tekan <em>Unduh &amp; Instal</em>. APK akan masuk ke folder <span class="mono">Download</span>.</li>
+      <li><strong>Izinkan instalasi:</strong> saat muncul peringatan, pilih <em>Setelan</em> → aktifkan <em>Izinkan dari sumber ini</em> untuk browser yang dipakai.</li>
+      <li><strong>Instal:</strong> buka notifikasi unduhan atau aplikasi <em>Files</em> / <em>File Manager</em>, tekan file APK, pilih <em>Instal</em>.</li>
+      <li><strong>Selesai.</strong> Aplikasi muncul di launcher STB. Ulangi untuk aplikasi lain.</li>
+    </ol>
+    <h3>Tips</h3>
+    <ul class="steps">
+      <li>Kalau tombol unduh tidak merespons, salin link APK lalu tempel di browser STB.</li>
+      <li>Aktifkan <em>Instal dari sumber tidak dikenal</em> per-aplikasi (browser), bukan global, agar lebih aman.</li>
+      <li>Tekan <span class="mono">Esc</span> / tombol <em>Back</em> untuk menutup jendela ini.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ Modal pengaturan ============ -->
+<div id="settings" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+  <div class="sheet">
+    <button class="close-btn" data-close aria-label="Tutup">✕</button>
+    <h2 id="settings-title">Sumber katalog</h2>
+    <p class="hint">Alamat file <span class="mono">catalog.json</span>. Kosongkan untuk memakai katalog bawaan di folder yang sama.</p>
+    <input id="catalog-url" class="text-input" type="url" placeholder="https://contoh.github.io/aap-store/catalog.json" />
+    <div class="sheet-actions">
+      <button id="btn-save-settings" class="primary-btn">Simpan &amp; muat ulang</button>
+      <button id="btn-reset-settings" class="ghost-btn">Kembalikan bawaan</button>
+    </div>
+    <p id="settings-info" class="hint mono"></p>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

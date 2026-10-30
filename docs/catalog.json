@@ -1,0 +1,10 @@
+{
+  "store": {
+    "name": "AAP STORE",
+    "tagline": "App store pribadi untuk STB & Android TV",
+    "version": 1,
+    "maxApps": 30,
+    "updated": "2026-10-30"
+  },
+  "apps": []
+}

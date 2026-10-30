@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Unduh APK — AAP STORE</title>
+<meta name="theme-color" content="#0b1020" />
+<link rel="icon" href="favicon.png" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  .dl-wrap { max-width: 1080px; margin: 0 auto; padding: 32px 0 0; }
+  .dl-title { font-size: clamp(26px, 3.2vw, 40px); margin: 24px 0 6px; }
+  .dl-sub { color: var(--muted); margin: 0 0 28px; font-size: 16px; }
+  .dl-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+  .dl-card {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 26px; display: flex; flex-direction: column; gap: 12px;
+  }
+  .dl-card h2 { margin: 0; font-size: 22px; }
+  .dl-card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+  .dl-meta { color: var(--muted); font-size: 12px; letter-spacing: .04em; }
+  .dl-btn {
+    display: block; text-align: center; text-decoration: none; margin-top: 8px;
+    padding: 16px 20px; border-radius: 14px; font-weight: 700; font-size: 17px;
+    color: #fff; background: linear-gradient(135deg, var(--violet), #3b6bff);
+    border: 2px solid transparent; transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .dl-btn.alt { background: linear-gradient(135deg, #ffb020, #ff5c6c); }
+  .dl-btn:hover, .dl-btn:focus-visible { transform: translateY(-2px); box-shadow: var(--focus); outline: none; }
+  .dl-steps { margin: 34px 0 0; padding: 24px 26px; background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); }
+  .dl-steps h3 { margin: 0 0 14px; font-size: 17px; color: var(--cyan); }
+  .dl-steps ol { margin: 0; padding-left: 22px; color: var(--muted); line-height: 1.9; font-size: 14px; }
+  .dl-steps code { background: #0b1020; padding: 2px 7px; border-radius: 6px; color: var(--text); font-size: 13px; }
+  .back { display: inline-block; margin-top: 26px; color: var(--cyan); text-decoration: none; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="bg-glow" aria-hidden="true"></div>
+
+<div class="dl-wrap">
+  <a class="back" href="./">← Kembali ke katalog</a>
+
+  <h1 class="dl-title">Unduh APK</h1>
+  <p class="dl-sub">Dua aplikasi. Pasang <strong>AAP STORE</strong> di STB, dan <strong>ADMIN</strong> di HP untuk upload aplikasi.</p>
+
+  <div class="dl-grid">
+    <div class="dl-card">
+      <h2>AAP STORE</h2>
+      <p>Aplikasi toko untuk STB / Android TV. Menampilkan katalog, mengunduh APK, dan membuka installer langsung dari TV.</p>
+      <div class="dl-meta">com.aapstore.tv · v1.0.0 · min Android 5.0 (API 21)</div>
+      <a class="dl-btn" href="downloads/AAP-STORE.apk" download>⬇ Unduh AAP-STORE.apk</a>
+    </div>
+
+    <div class="dl-card">
+      <h2>AAP STORE ADMIN</h2>
+      <p>Untuk kamu sendiri. Pilih file APK, isi detail, lalu upload ke GitHub Releases + update katalog otomatis.</p>
+      <div class="dl-meta">com.aapstore.admin · v1.0.0 · min Android 5.0 (API 21)</div>
+      <a class="dl-btn alt" href="downloads/AAP-STORE-ADMIN.apk" download>⬇ Unduh AAP-STORE-ADMIN.apk</a>
+    </div>
+  </div>
+
+  <div class="dl-steps">
+    <h3>Cara pasang di STB</h3>
+    <ol>
+      <li>Buka halaman ini dari browser STB (alamat yang sama dengan katalog), lalu tekan tombol unduh.</li>
+      <li>Kalau browser STB tidak bisa mengunduh, salin APK lewat flashdisk atau kirim via <code>adb install AAP-STORE.apk</code>.</li>
+      <li>Saat muncul peringatan keamanan, pilih <strong>Setelan</strong> → aktifkan <strong>Izinkan dari sumber ini</strong>.</li>
+      <li>Tekan <strong>Instal</strong>, lalu buka <strong>AAP STORE</strong> dari launcher TV.</li>
+      <li>Kalau katalog tidak muncul, tekan tombol <strong>Sumber</strong> dan isi alamat <code>catalog.json</code>.</li>
+    </ol>
+  </div>
+</div>
+</body>
+</html>

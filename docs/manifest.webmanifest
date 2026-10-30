@@ -1,0 +1,22 @@
+{
+  "name": "AAP STORE",
+  "short_name": "AAP STORE",
+  "description": "Katalog aplikasi Android untuk STB & Android TV. Simpan sampai 30 APK, unduh dan instal langsung dari TV.",
+  "lang": "id",
+  "dir": "ltr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#080b16",
+  "theme_color": "#0b1020",
+  "categories": ["utilities", "entertainment"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Cari aplikasi", "url": "./index.html?focus=search" }
+  ]
+}
