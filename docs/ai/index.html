@@ -1057,6 +1057,14 @@ html[data-theme="dark"] .content a { color: #a996ff; }
   border-radius: 4px;
 }
 
+.hint a {
+  color: var(--accent, #7c9cff);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.hint a:hover { color: var(--accent-strong, #9db4ff); }
+
 .input {
   width: 100%;
   padding: 10px 12px;
@@ -1514,6 +1522,7 @@ html[data-theme="dark"] .content a { color: #a996ff; }
             </button>
           </div>
           <p class="hint">Kosongkan untuk penyedia lokal (Ollama / LM Studio) yang tidak butuh key.</p>
+          <p class="hint">Key gratis: <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Gemini</a> · <a href="https://console.groq.com/keys" target="_blank" rel="noopener">Groq</a> · <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">OpenRouter</a></p>
         </div>
 
         <div class="field">
@@ -1847,10 +1856,10 @@ html[data-theme="dark"] .content a { color: #a996ff; }
   };
 
   var DEFAULT_SETTINGS = {
-    preset: 'openai',
-    baseUrl: 'https://api.openai.com/v1',
+    preset: 'gemini',
+    baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai',
     apiKey: '',
-    model: 'gpt-4o-mini',
+    model: 'gemini-3.5-flash',
     systemPrompt:
       'Anda adalah Agung AI, asisten yang ramah, jelas, dan akurat. ' +
       'Jawab dalam bahasa yang sama dengan pengguna. Gunakan Markdown bila membantu ' +
@@ -1888,8 +1897,8 @@ html[data-theme="dark"] .content a { color: #a996ff; }
     {
       id: 'gemini', name: 'Gemini',
       baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai',
-      models: ['gemini-2.5-flash', 'gemini-2.5-pro', 'gemini-2.0-flash'],
-      keyHint: 'AIza...'
+      models: ['gemini-3.5-flash', 'gemini-3.8-flash', 'gemini-3.1-flash-lite', 'gemini-flash-latest'],
+      keyHint: 'AIza... atau AQ...'
     },
     {
       id: 'mistral', name: 'Mistral',
@@ -2121,7 +2130,7 @@ html[data-theme="dark"] .content a { color: #a996ff; }
 
     if (el.emptyNote) {
       el.emptyNote.innerHTML = demo
-        ? 'Mode demo aktif — sambungkan API key di <b>Pengaturan</b> untuk jawaban AI sungguhan.'
+        ? 'Mode demo aktif — buat API key <b>gratis</b> di aistudio.google.com/apikey, lalu tempel di <b>Pengaturan</b>.'
         : 'Terhubung ke <b>' + MD.escape(hostOf(state.settings.baseUrl)) + '</b> · model <b>' + MD.escape(state.settings.model) + '</b>';
     }
   }
@@ -2483,11 +2492,11 @@ html[data-theme="dark"] .content a { color: #a996ff; }
 
     if (/^(halo|hai|hi|hello|pagi|siang|sore|malam|assalam|selamat)/.test(t)) {
       return head +
-        'Saya sudah siap dipakai. Untuk mengaktifkan AI sungguhan:\n\n' +
-        '1. Buka **Pengaturan** (ikon gerigi di kanan atas).\n' +
-        '2. Pilih penyedia — misalnya **OpenRouter** (banyak model gratis) atau **Groq** (cepat).\n' +
-        '3. Tempel **API key**, klik **Tes koneksi**, lalu **Simpan**.\n\n' +
-        'Setelah itu semua jawaban akan datang dari model AI pilihan Anda. Mau mulai dari mana?';
+        'AI sungguhan bisa aktif **gratis**, cukup 1 langkah:\n\n' +
+        '1. Buat API key gratis di **aistudio.google.com/apikey** (login akun Google → **Create API key**).\n' +
+        '2. Buka **Pengaturan** — penyedia **Gemini** sudah terpilih otomatis.\n' +
+        '3. Tempel key → **Tes koneksi** → **Simpan**.\n\n' +
+        'Tanpa kartu kredit, dan kuotanya cukup untuk pemakaian harian. Mau mulai dari mana?';
     }
 
     if (/(kode|code|javascript|python|fungsi|function|program|error|bug|script)/.test(t)) {
@@ -2499,17 +2508,17 @@ html[data-theme="dark"] .content a { color: #a996ff; }
         '}\n\n' +
         'console.log(sapa("Agung"));\n' +
         '```\n\n' +
-        'Aktifkan API key di **Pengaturan** untuk jawaban yang benar-benar dibuat oleh model AI.';
+        'Aktifkan API key **gratis** (aistudio.google.com/apikey) di **Pengaturan** untuk jawaban yang benar-benar dibuat oleh model AI.';
     }
 
     return head +
       'Pesan Anda saya terima:\n\n> ' + quote.replace(/\n/g, '\n> ') + '\n\n' +
-      'Karena belum ada API key, saya belum bisa menjawab dengan AI sungguhan. Langkah mengaktifkannya:\n\n' +
-      '1. Buka **Pengaturan** → pilih penyedia.\n' +
-      '2. Isi **API key** → **Tes koneksi** → **Simpan**.\n' +
-      '3. Kirim ulang pertanyaan Anda.\n\n' +
+      'Karena belum ada API key, saya belum bisa menjawab dengan AI sungguhan. Mengaktifkannya gratis:\n\n' +
+      '1. Buat API key gratis di **aistudio.google.com/apikey**.\n' +
+      '2. Buka **Pengaturan** — penyedia **Gemini** sudah terpilih otomatis.\n' +
+      '3. Tempel key → **Tes koneksi** → **Simpan**, lalu kirim ulang pertanyaan Anda.\n\n' +
       '> 🔒 API key hanya disimpan di browser ini dan hanya dikirim ke alamat API yang Anda isi.\n\n' +
-      'Pilihan gratis yang mudah: **OpenRouter** (model `:free`) atau **Groq**. Bisa juga **Ollama** di komputer sendiri tanpa key.';
+      'Alternatif gratis lain: **Groq** (console.groq.com/keys) atau **OpenRouter** (model `:free`). Bisa juga **Ollama** di komputer sendiri tanpa key.';
   }
 
   async function demoStream(asst, signal) {
