@@ -1,75 +1,63 @@
-/* AAP STORE — service worker sederhana
-   Tujuan: shell web store tetap bisa dibuka saat internet putus,
-   dan katalog terakhir tetap tampil.
+/* Service worker Agung AI — cache shell agar bisa dibuka offline.
+   Permintaan ke API (domain lain) selalu dilewatkan ke jaringan. */
 
-   Strategi:
-   - App shell (html/css/js/ikon) : cache-first, update di background
-   - catalog.json                 : network-first, fallback ke cache
-   - file APK & domain luar       : langsung ke jaringan (jangan di-cache!)
-*/
-const VERSION = 'aapstore-v1';
-const SHELL = [
+const CACHE = 'agung-ai-v2';
+const ASSETS = [
   './',
   './index.html',
   './styles.css',
+  './markdown.js',
   './app.js',
   './manifest.webmanifest',
-  './catalog.json',
+  './icon.svg',
   './icon-192.png',
-  './icon-512.png',
-  './favicon.png',
+  './icon-512.png'
 ];
 
-self.addEventListener('install', (e) => {
-  e.waitUntil(
-    caches.open(VERSION).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()).catch(() => self.skipWaiting())
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE).then((cache) => cache.addAll(ASSETS)).then(() => self.skipWaiting())
   );
 });
 
-self.addEventListener('activate', (e) => {
-  e.waitUntil(
-    caches
-      .keys()
-      .then((keys) => Promise.all(keys.filter((k) => k !== VERSION).map((k) => caches.delete(k))))
-      .then(() => self.clients.claim())
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) =>
+      Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))
+    ).then(() => self.clients.claim())
   );
 });
 
-self.addEventListener('fetch', (e) => {
-  const req = e.request;
+self.addEventListener('fetch', (event) => {
+  const req = event.request;
   if (req.method !== 'GET') return;
 
   const url = new URL(req.url);
-  if (url.origin !== location.origin) return; // APK / CDN luar: biarkan lewat
+  if (url.origin !== self.location.origin) return;
 
-  if (url.pathname.endsWith('.apk')) return; // jangan pernah cache APK
-
-  if (url.pathname.endsWith('catalog.json')) {
-    e.respondWith(
+  if (req.mode === 'navigate') {
+    event.respondWith(
       fetch(req)
         .then((res) => {
           const copy = res.clone();
-          caches.open(VERSION).then((c) => c.put(req, copy));
+          caches.open(CACHE).then((cache) => cache.put(req, copy));
           return res;
         })
-        .catch(() => caches.match(req))
+        .catch(() => caches.match(req).then((c) => c || caches.match('./index.html')))
     );
     return;
   }
 
-  e.respondWith(
-    caches.match(req).then(
-      (hit) =>
-        hit ||
-        fetch(req)
-          .then((res) => {
-            if (res.ok && res.type === 'basic') {
-              const copy = res.clone();
-              caches.open(VERSION).then((c) => c.put(req, copy));
-            }
-            return res;
-          })
-          .catch(() => caches.match('./index.html'))
-    )
+  // Network-first: file yang diperbarui langsung terpakai, cache hanya untuk offline.
+  event.respondWith(
+    fetch(req)
+      .then((res) => {
+        if (res && res.ok) {
+          const copy = res.clone();
+          caches.open(CACHE).then((cache) => cache.put(req, copy));
+        }
+        return res;
+      })
+      .catch(() => caches.match(req))
   );
 });

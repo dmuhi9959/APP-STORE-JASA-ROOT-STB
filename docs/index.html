@@ -1,123 +1,270 @@
-<!DOCTYPE html>
-<html lang="id">
+<!doctype html>
+<html lang="id" data-theme="dark">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>AAP STORE — App Store Android TV / STB</title>
-<meta name="description" content="Katalog aplikasi Android untuk STB & Android TV. Simpan sampai 30 APK, unduh dan instal langsung dari TV." />
-<meta name="theme-color" content="#0b1020" />
-<link rel="icon" href="favicon.png" />
-<link rel="apple-touch-icon" href="icon-192.png" />
-<link rel="manifest" href="manifest.webmanifest" />
-<link rel="stylesheet" href="styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Agung AI — Asisten Chat</title>
+  <meta name="description" content="Agung AI — aplikasi chat AI ringan yang bisa dipakai dengan OpenAI, OpenRouter, Groq, DeepSeek, Gemini, Ollama, dan penyedia lain yang kompatibel." />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="theme-color" content="#0b0b10" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<div class="bg-glow" aria-hidden="true"></div>
+  <div class="app" id="app">
 
-<header class="topbar">
-  <div class="brand">
-    <img src="icon-192.png" alt="" class="brand-logo" width="56" height="56" />
-    <div class="brand-text">
-      <h1>AAP <span>STORE</span></h1>
-      <p id="tagline">Muat katalog…</p>
-    </div>
-  </div>
-
-  <div class="topbar-actions">
-    <label class="search">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4a6 6 0 1 0 3.8 10.6l4.3 4.3 1.4-1.4-4.3-4.3A6 6 0 0 0 10 4Zm0 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z"/></svg>
-      <input id="search" type="search" placeholder="Cari aplikasi…" autocomplete="off" spellcheck="false" />
-    </label>
-    <button id="btn-refresh" class="icon-btn" title="Muat ulang katalog" aria-label="Muat ulang katalog">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5V2L8 6l4 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7Z"/></svg>
-    </button>
-    <button id="btn-settings" class="icon-btn" title="Pengaturan sumber katalog" aria-label="Pengaturan">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm0 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm8.4 3.3.9 2.1-2 2-2.1-.9a8 8 0 0 1-1.7 1l-.4 2.2h-2.8l-.4-2.2a8 8 0 0 1-1.7-1l-2.1.9-2-2 .9-2.1a8 8 0 0 1-1-1.7L2.3 13v-2.8l2.2-.4a8 8 0 0 1 1-1.7l-.9-2.1 2-2 2.1.9a8 8 0 0 1 1.7-1l.4-2.2h2.8l.4 2.2a8 8 0 0 1 1.7 1l2.1-.9 2 2-.9 2.1a8 8 0 0 1 1 1.7l2.2.4V13l-2.2.4a8 8 0 0 1-1 1.9Z"/></svg>
-    </button>
-    <button id="btn-install-app" class="ghost-btn hidden">Pasang</button>
-  </div>
-</header>
-
-<nav id="cats" class="cats" aria-label="Kategori"></nav>
-
-<main id="main">
-  <div id="status" class="status" role="status" aria-live="polite">
-    <div class="spinner"></div>
-    <p>Memuat katalog…</p>
-  </div>
-  <section id="grid" class="grid" aria-label="Daftar aplikasi"></section>
-</main>
-
-<footer class="foot">
-  <span id="foot-info">AAP STORE</span>
-  <span class="dot">•</span>
-  <span>Maksimal <strong id="foot-max">30</strong> aplikasi</span>
-  <span class="dot">•</span>
-  <button id="btn-help" class="link-btn">Cara instal APK di STB</button>
-  <span class="dot">•</span>
-  <a class="link-btn" href="download.html">Unduh APK</a>
-</footer>
-
-<!-- ============ Modal detail aplikasi ============ -->
-<div id="sheet" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
-  <div class="sheet">
-    <button class="close-btn" data-close aria-label="Tutup">✕</button>
-    <div class="sheet-head">
-      <img id="sheet-icon" class="sheet-icon" alt="" width="128" height="128" />
-      <div>
-        <h2 id="sheet-title">Aplikasi</h2>
-        <p id="sheet-pkg" class="mono"></p>
-        <div id="sheet-badges" class="badges"></div>
+    <!-- ============ SIDEBAR ============ -->
+    <aside class="sidebar" id="sidebar" aria-label="Riwayat percakapan">
+      <div class="side-head">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z" fill="currentColor"/></svg>
+          </span>
+          <span class="brand-name">Agung AI</span>
+        </div>
+        <button class="icon-btn side-close" id="closeSidebar" title="Tutup menu" aria-label="Tutup menu">
+          <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
       </div>
-    </div>
-    <p id="sheet-desc" class="sheet-desc"></p>
-    <dl id="sheet-meta" class="meta-list"></dl>
-    <div class="sheet-actions">
-      <a id="sheet-download" class="primary-btn" href="#" rel="noopener">⬇ Unduh &amp; Instal</a>
-      <button id="sheet-copy" class="ghost-btn">Salin link</button>
-    </div>
-    <p class="hint">Setelah terunduh, buka notifikasi / aplikasi <em>Files</em> di STB lalu tekan APK-nya untuk instal. Izinkan “Instal aplikasi tidak dikenal” sekali saja.</p>
+
+      <button class="new-chat" id="newChat">
+        <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        <span>Chat baru</span>
+      </button>
+
+      <div class="search">
+        <svg class="search-ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input id="searchInput" type="search" placeholder="Cari chat..." autocomplete="off" aria-label="Cari percakapan" />
+      </div>
+
+      <nav class="conv-list" id="convList" aria-label="Daftar percakapan"></nav>
+
+      <div class="side-foot">
+        <div class="mode-badge" id="modeBadge">
+          <span class="dot" id="modeDot"></span>
+          <span id="modeText">Mode demo</span>
+        </div>
+        <div class="foot-row">
+          <button class="foot-btn" id="openSettings">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.34 1.87l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.7 1.7 0 00-1.87-.34 1.7 1.7 0 00-1 1.55V21a2 2 0 11-4 0v-.09A1.7 1.7 0 009 19.4a1.7 1.7 0 00-1.87.34l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.7 1.7 0 004.6 15a1.7 1.7 0 00-1.55-1H3a2 2 0 110-4h.09A1.7 1.7 0 004.6 9a1.7 1.7 0 00-.34-1.87l-.06-.06a2 2 0 112.83-2.83l.06.06A1.7 1.7 0 009 4.6h.09A1.7 1.7 0 0010 3.05V3a2 2 0 114 0v.09a1.7 1.7 0 001 1.55 1.7 1.7 0 001.87-.34l.06-.06a2 2 0 112.83 2.83l-.06.06A1.7 1.7 0 0019.4 9v.09a1.7 1.7 0 001.55 1H21a2 2 0 110 4h-.09a1.7 1.7 0 00-1.55 1z"/></svg>
+            <span>Pengaturan</span>
+          </button>
+          <button class="foot-btn" id="toggleTheme">
+            <svg viewBox="0 0 24 24" id="themeIcon"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
+            <span id="themeLabel">Mode terang</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="scrim" id="scrim" hidden></div>
+
+    <!-- ============ MAIN ============ -->
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="openSidebar" title="Menu" aria-label="Buka menu">
+          <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <div class="topbar-title" id="chatTitle">Chat baru</div>
+        <button class="model-pill" id="modelPill" title="Ubah model / penyedia">
+          <span class="pill-dot" id="pillDot"></span>
+          <span class="pill-name" id="pillName">gpt-4o-mini</span>
+        </button>
+        <div class="top-actions">
+          <button class="icon-btn" id="exportBtn" title="Ekspor chat (Markdown)" aria-label="Ekspor chat">
+            <svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
+          </button>
+          <button class="icon-btn" id="settingsBtn" title="Pengaturan" aria-label="Pengaturan">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.34 1.87l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.7 1.7 0 00-1.87-.34 1.7 1.7 0 00-1 1.55V21a2 2 0 11-4 0v-.09A1.7 1.7 0 009 19.4a1.7 1.7 0 00-1.87.34l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.7 1.7 0 004.6 15a1.7 1.7 0 00-1.55-1H3a2 2 0 110-4h.09A1.7 1.7 0 004.6 9a1.7 1.7 0 00-.34-1.87l-.06-.06a2 2 0 112.83-2.83l.06.06A1.7 1.7 0 009 4.6h.09A1.7 1.7 0 0010 3.05V3a2 2 0 114 0v.09a1.7 1.7 0 001 1.55 1.7 1.7 0 001.87-.34l.06-.06a2 2 0 112.83 2.83l-.06.06A1.7 1.7 0 0019.4 9v.09a1.7 1.7 0 001.55 1H21a2 2 0 110 4h-.09a1.7 1.7 0 00-1.55 1z"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="chat-scroll" id="chatScroll">
+        <section class="empty" id="empty">
+          <div class="empty-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z" fill="currentColor"/></svg>
+          </div>
+          <h1>Ada yang bisa saya bantu?</h1>
+          <p class="empty-sub">Tanya apa saja — menulis, ngoding, belajar, atau sekadar cari ide.</p>
+
+          <div class="suggestions">
+            <button class="sug" data-prompt="Jelaskan cara kerja model bahasa besar (LLM) dengan bahasa yang sederhana, pakai analogi.">
+              <span class="sug-ico"><svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 00-3.6 10.8c.5.4.8 1 .9 1.6l.1.6h5.2l.1-.6c.1-.6.4-1.2.9-1.6A6 6 0 0012 3z"/><path d="M9.5 19h5"/><path d="M10 22h4"/></svg></span>
+              <span class="sug-t">Jelaskan konsep</span>
+              <span class="sug-d">Cara kerja AI, dengan analogi sederhana</span>
+            </button>
+            <button class="sug" data-prompt="Buatkan fungsi JavaScript untuk memformat tanggal ke format Indonesia (contoh: 11 November 2026), lengkap dengan contoh pakai.">
+              <span class="sug-ico"><svg viewBox="0 0 24 24"><path d="M8 6l-5 6 5 6"/><path d="M16 6l5 6-5 6"/></svg></span>
+              <span class="sug-t">Tulis kode</span>
+              <span class="sug-d">Fungsi, perbaikan bug, atau penjelasan</span>
+            </button>
+            <button class="sug" data-prompt="Buatkan rencana belajar Python 30 hari untuk pemula, maksimal 60 menit per hari, dengan target praktik tiap minggu.">
+              <span class="sug-ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/><path d="M8 15h3"/></svg></span>
+              <span class="sug-t">Susun rencana</span>
+              <span class="sug-d">Belajar, kerja, atau proyek pribadi</span>
+            </button>
+            <button class="sug" data-prompt="Ringkas teks berikut menjadi 5 poin utama, lalu beri satu saran tindakan: [tempel teks di sini]">
+              <span class="sug-ico"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h13"/></svg></span>
+              <span class="sug-t">Ringkas teks</span>
+              <span class="sug-d">Ubah bacaan panjang jadi poin penting</span>
+            </button>
+          </div>
+
+          <p class="empty-note" id="emptyNote">Mode demo aktif — sambungkan API key di <b>Pengaturan</b> untuk jawaban AI sungguhan.</p>
+        </section>
+
+        <div class="messages" id="messages" aria-live="polite"></div>
+        <div class="scroll-anchor" id="scrollAnchor"></div>
+      </div>
+
+      <button class="scroll-bottom" id="scrollBottom" title="Ke pesan terbaru" aria-label="Ke pesan terbaru" hidden>
+        <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      </button>
+
+      <div class="composer-wrap">
+        <form class="composer" id="composer" autocomplete="off">
+          <label class="sr-only" for="input">Pesan</label>
+          <textarea id="input" rows="1" placeholder="Kirim pesan ke Agung AI..." spellcheck="true" autocapitalize="sentences"></textarea>
+          <div class="composer-bar">
+            <span class="composer-hint"><kbd>Enter</kbd> kirim · <kbd>Shift</kbd>+<kbd>Enter</kbd> baris baru</span>
+            <button type="submit" class="send-btn" id="sendBtn" title="Kirim pesan" aria-label="Kirim pesan" disabled>
+              <svg class="ico-send" viewBox="0 0 24 24"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+              <svg class="ico-stop" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="2" fill="currentColor" stroke="none"/></svg>
+            </button>
+          </div>
+        </form>
+        <p class="disclaimer">Agung AI bisa salah — periksa info penting. Kunci API hanya tersimpan di perangkat ini.</p>
+      </div>
+    </main>
   </div>
-</div>
 
-<!-- ============ Modal bantuan ============ -->
-<div id="help" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="help-title">
-  <div class="sheet">
-    <button class="close-btn" data-close aria-label="Tutup">✕</button>
-    <h2 id="help-title">Cara instal di STB / Android TV</h2>
-    <ol class="steps">
-      <li><strong>Buka AAP STORE</strong> di browser STB (Chrome / TV Bro / Puffin). Ketik alamat situsnya, atau kirim link-nya ke TV.</li>
-      <li><strong>Pilih aplikasi</strong> lalu tekan <em>Unduh &amp; Instal</em>. APK akan masuk ke folder <span class="mono">Download</span>.</li>
-      <li><strong>Izinkan instalasi:</strong> saat muncul peringatan, pilih <em>Setelan</em> → aktifkan <em>Izinkan dari sumber ini</em> untuk browser yang dipakai.</li>
-      <li><strong>Instal:</strong> buka notifikasi unduhan atau aplikasi <em>Files</em> / <em>File Manager</em>, tekan file APK, pilih <em>Instal</em>.</li>
-      <li><strong>Selesai.</strong> Aplikasi muncul di launcher STB. Ulangi untuk aplikasi lain.</li>
-    </ol>
-    <h3>Tips</h3>
-    <ul class="steps">
-      <li>Kalau tombol unduh tidak merespons, salin link APK lalu tempel di browser STB.</li>
-      <li>Aktifkan <em>Instal dari sumber tidak dikenal</em> per-aplikasi (browser), bukan global, agar lebih aman.</li>
-      <li>Tekan <span class="mono">Esc</span> / tombol <em>Back</em> untuk menutup jendela ini.</li>
-    </ul>
-  </div>
-</div>
+  <!-- ============ SETTINGS MODAL ============ -->
+  <div class="modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" hidden>
+    <div class="modal-panel">
+      <header class="modal-head">
+        <h2 id="settingsTitle">Pengaturan</h2>
+        <button class="icon-btn" id="closeSettings" aria-label="Tutup pengaturan">
+          <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </header>
 
-<!-- ============ Modal pengaturan ============ -->
-<div id="settings" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="settings-title">
-  <div class="sheet">
-    <button class="close-btn" data-close aria-label="Tutup">✕</button>
-    <h2 id="settings-title">Sumber katalog</h2>
-    <p class="hint">Alamat file <span class="mono">catalog.json</span>. Kosongkan untuk memakai katalog bawaan di folder yang sama.</p>
-    <input id="catalog-url" class="text-input" type="url" placeholder="https://contoh.github.io/aap-store/catalog.json" />
-    <div class="sheet-actions">
-      <button id="btn-save-settings" class="primary-btn">Simpan &amp; muat ulang</button>
-      <button id="btn-reset-settings" class="ghost-btn">Kembalikan bawaan</button>
+      <div class="modal-body">
+        <div class="field">
+          <span class="field-label">Penyedia</span>
+          <div class="chips" id="presetChips"></div>
+          <p class="hint">Semua penyedia di bawah memakai format API yang sama (OpenAI-compatible).</p>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="baseUrl">Base URL</label>
+          <input class="input" id="baseUrl" type="url" placeholder="https://api.openai.com/v1" spellcheck="false" />
+          <p class="hint">Harus berakhir di <code>/v1</code> (atau sesuai dokumentasi penyedia).</p>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="apiKey">API key</label>
+          <div class="input-row">
+            <input class="input" id="apiKey" type="password" placeholder="Tempel API key di sini" spellcheck="false" autocomplete="off" />
+            <button type="button" class="icon-btn eye" id="toggleKey" title="Tampilkan / sembunyikan" aria-label="Tampilkan atau sembunyikan API key">
+              <svg viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <p class="hint">Kosongkan untuk penyedia lokal (Ollama / LM Studio) yang tidak butuh key.</p>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="modelInput">Model</label>
+          <input class="input" id="modelInput" list="modelList" placeholder="gpt-4o-mini" spellcheck="false" />
+          <datalist id="modelList"></datalist>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="systemPrompt">System prompt</label>
+          <textarea class="input textarea" id="systemPrompt" rows="3" placeholder="Anda adalah asisten yang membantu..."></textarea>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label class="field-label" for="temperature">Kreativitas <span class="val" id="tempVal">0.7</span></label>
+            <input class="range" id="temperature" type="range" min="0" max="2" step="0.1" value="0.7" />
+            <p class="hint">0 = konsisten, 2 = liar.</p>
+          </div>
+          <div class="field">
+            <label class="field-label" for="maxTokens">Maks. token jawaban</label>
+            <input class="input" id="maxTokens" type="number" min="64" max="32000" step="64" value="1024" />
+          </div>
+        </div>
+
+        <div class="field row-between">
+          <div>
+            <span class="field-label">Streaming</span>
+            <p class="hint">Tampilkan jawaban kata per kata.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="streamToggle" checked />
+            <span class="track"><span class="thumb"></span></span>
+          </label>
+        </div>
+
+        <div class="field">
+          <button type="button" class="btn btn-ghost" id="testBtn">Tes koneksi</button>
+          <p class="test-result" id="testResult" hidden></p>
+        </div>
+
+        <p class="note">
+          <b>Soal keamanan:</b> API key disimpan di <code>localStorage</code> browser ini dan hanya dikirim ke Base URL di atas.
+          Untuk aplikasi yang dipakai banyak orang, gunakan proxy server agar key tidak terekspos.
+        </p>
+
+        <div class="danger-zone">
+          <span class="field-label">Data</span>
+          <div class="danger-actions">
+            <button type="button" class="btn btn-ghost" id="exportAllBtn">Ekspor semua (JSON)</button>
+            <button type="button" class="btn btn-danger" id="clearAllBtn">Hapus semua chat</button>
+          </div>
+        </div>
+      </div>
+
+      <footer class="modal-foot">
+        <button type="button" class="btn btn-ghost" id="resetBtn">Default</button>
+        <div class="spacer"></div>
+        <button type="button" class="btn btn-ghost" id="cancelBtn">Batal</button>
+        <button type="button" class="btn btn-primary" id="saveBtn">Simpan</button>
+      </footer>
     </div>
-    <p id="settings-info" class="hint mono"></p>
   </div>
-</div>
 
-<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+  <!-- ============ DIALOG (ganti nama / konfirmasi) ============ -->
+  <div class="modal" id="askModal" role="dialog" aria-modal="true" aria-labelledby="askTitle" hidden>
+    <div class="modal-panel ask-panel">
+      <header class="modal-head">
+        <h2 id="askTitle">Konfirmasi</h2>
+        <button class="icon-btn" id="askClose" aria-label="Tutup">
+          <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </header>
+      <div class="modal-body">
+        <p class="ask-msg" id="askMessage" hidden></p>
+        <input class="input" id="askInput" type="text" autocomplete="off" spellcheck="false" />
+      </div>
+      <footer class="modal-foot">
+        <div class="spacer"></div>
+        <button type="button" class="btn btn-ghost" id="askCancel">Batal</button>
+        <button type="button" class="btn btn-primary" id="askOk">Simpan</button>
+      </footer>
+    </div>
+  </div>
 
-<script src="app.js"></script>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <noscript>
+    <p style="padding:24px;font-family:sans-serif">Agung AI butuh JavaScript untuk berjalan. Aktifkan JavaScript di browser Anda.</p>
+  </noscript>
+
+  <script src="markdown.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
